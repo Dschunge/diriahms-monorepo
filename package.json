@@ -1,0 +1,58 @@
+{
+  "name": "diriahms",
+  "private": true,
+  "workspaces": [
+    "./apps/*",
+    "./packages/*"
+  ],
+  "os": [
+    "linux",
+    "darwin",
+    "win32"
+  ],
+  "scripts": {
+    "native": "cd apps/expo && yarn start",
+    "watch": "yarn workspaces foreach -pi run watch",
+    "vercel:install": "yarn set version 3.5 && yarn install",
+    "web": "yarn build && cd apps/next && yarn next --port 3001",
+    "web:extract": "DISABLE_EXTRACTION=false yarn workspace next-app dev",
+    "web:prod": "yarn workspace next-app build",
+    "web:prod:serve": "yarn workspace next-app serve",
+    "fix": "manypkg fix",
+    "postinstall": "yarn check-deps && yarn build",
+    "build": "yarn workspaces foreach --all --exclude next-app run build",
+    "upgrade:tamagui": "yarn up '*tamagui*'@latest '@tamagui/*'@latest react-native-web-lite@latest",
+    "upgrade:tamagui:canary": "yarn up '*tamagui*'@canary '@tamagui/*'@canary react-native-web-lite@canary",
+    "check-deps": "check-dependency-version-consistency ."
+  },
+  "resolutions": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-refresh": "^0.14.0",
+    "react-native-svg": "15.3.0",
+    "react-native-web": "~0.19.12"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.24.6",
+    "@diriahms/api": "*",
+    "@diriahms/database": "*",
+    "@manypkg/cli": "^0.21.4",
+    "@react-hookz/web": "^24.0.4",
+    "@tanstack/react-query": "^5.45.0",
+    "@tanstack/react-table": "^8.17.3",
+    "axios": "^1.7.2",
+    "check-dependency-version-consistency": "^4.1.0",
+    "dotenv": "^16.4.5",
+    "eslint": "^9.3.0",
+    "moment": "^2.30.1",
+    "node-gyp": "^10.1.0",
+    "prettier": "^3.2.5",
+    "turbo": "^2.0.5",
+    "typescript": "^5.4.5",
+    "zod": "^3.23.8"
+  },
+  "packageManager": "yarn@3.5.1",
+  "devDependencies": {
+    "dotenv-cli": "^7.4.2"
+  }
+}
