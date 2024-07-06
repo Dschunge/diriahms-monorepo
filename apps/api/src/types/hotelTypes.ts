@@ -5,6 +5,8 @@ import {
   Room,
   RoomCategory,
   Season,
+  Tour,
+  TourPriceCategory,
 } from '@prisma/client';
 
 export type HotelWithRooms = Hotel & {
@@ -31,4 +33,8 @@ export type RoomCategoryWithSeason = RoomCategory & {
 
 export type RoomWithCleanings = Room & {
   cleaning: Cleaning[];
+};
+
+export type TourWithPriceCategories = Tour & {
+  pricecategories: TourPriceCategory[];
 };

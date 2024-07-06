@@ -8,36 +8,18 @@
     "HOST",
     "PORT"
   ],
-  "pipeline": {
+
+  "tasks": {
     "build": {
-      "env": [
-        "DISABLE_EXTRACTION",
-        "NODE_ENV",
-        "EAS_BUILD_PLATFORM",
-        "DATABASE_URL"
-      ],
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        ".next/**",
-        "!.next/cache/**",
-        "build/**",
-        "node_modules/.cache/metro/**"
-      ]
+      "env": ["DISABLE_EXTRACTION", "NODE_ENV", "EAS_BUILD_PLATFORM", "DATABASE_URL"],
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**", "build/**", "node_modules/.cache/metro/**"]
     },
     "dev": {
       "cache": false,
       "persistent": true,
-      "env": [
-        "DISABLE_EXTRACTION",
-        "NODE_ENV",
-        "EAS_BUILD_PLATFORM",
-        "DATABASE_URL"
-      ]
-    }
-  },
-  "tasks": {
+      "env": ["DISABLE_EXTRACTION", "NODE_ENV", "EAS_BUILD_PLATFORM", "DATABASE_URL"]
+    },
     "db:generate": {
       "cache": false
     },
@@ -45,10 +27,5 @@
       "cache": false
     }
   },
-  "globalPassThroughEnv": [
-    "DATABASE_URL",
-    "HOST",
-    "NODE_ENV",
-    "PORT"
-  ]
+  "globalPassThroughEnv": ["DATABASE_URL", "HOST", "NODE_ENV", "PORT"]
 }

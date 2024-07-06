@@ -30,7 +30,7 @@ export class MqttService {
 
     //const connectUrl = `mqtt://${host}:${port}`;
 
-    const connectUrl2 = `mqtt://172.16.8.115:${1883}`;
+    const connectUrl2 = `mqtt://172.16.8.108:${1883}`;
 
     this.logger.log('Connect to MQTT Broker... ' + connectUrl2);
 
@@ -48,7 +48,7 @@ export class MqttService {
     this.mqttClient.on('connect', () => {
       this.logger.log('Connect to MQTT Broker');
       this.mqttClient.subscribe(
-        'zigbee2mqtt/4fec721f-aecd-47c9-bc9d-9066b312b5cc/800/cleaning',
+        'zigbee2mqtt/4fec721f-aecd-47c9-bc9d-9066b312b5cc/#',
         (err) => {
           if (!err) {
             //mqttClient.publish("presence", "Hello mqtt");
@@ -69,7 +69,7 @@ export class MqttService {
 
     this.mqttClient.on('message', async (topic: string, _message: any) => {
       //console.log('topic: ', topic);
-      //console.log('message: ', _message.toString());
+      console.log('message: ', _message.toString());
 
       const topicparts = topic.split('/');
       //console.log(topicparts);
@@ -92,34 +92,34 @@ export class MqttService {
               //console.log({ action });
               switch (action) {
                 case '1_single':
-                  console.log('clean');
+                  console.log('clean room: ', roomNumber);
                   const result = await this.roomService.updateCleaning(
                     hotelId,
-                    roomNumber,
+                    '103', //roomNumber,
                     CLEANINSTATUS.CLEAN,
                   );
                   break;
                 case '2_single':
-                  console.log('do not distrurb');
+                  console.log('do not distrurb room: ', roomNumber);
                   const result1 = await this.roomService.updateCleaning(
                     hotelId,
-                    roomNumber,
+                    '103', // roomNumber,
                     CLEANINSTATUS.DONOTDISTRUB,
                   );
                   break;
                 case '3_single':
-                  console.log('do not distrurb');
+                  console.log('clean room: ', 800);
                   const result2 = await this.roomService.updateCleaning(
                     hotelId,
-                    '103',
+                    '800',
                     CLEANINSTATUS.CLEAN,
                   );
                   break;
                 case '4_single':
-                  console.log('do not distrurb');
+                  console.log('do not distrurb room: ', 800);
                   const result3 = await this.roomService.updateCleaning(
                     hotelId,
-                    '103',
+                    '800',
                     CLEANINSTATUS.DONOTDISTRUB,
                   );
                   break;

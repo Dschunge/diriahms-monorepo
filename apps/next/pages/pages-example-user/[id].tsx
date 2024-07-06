@@ -7,7 +7,7 @@ export default function Page() {
       <Head>
         <title>User</title>
       </Head>
-      <UserDetailScreen />
+      {/* <UserDetailScreen /> */}
     </>
   )
 }

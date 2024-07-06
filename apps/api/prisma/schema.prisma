@@ -39,6 +39,7 @@ model Hotel {
   bookings                Booking[]
   activities              Activity[]
   tours                   Tour[]
+  spa                     Spa[]
   amenities               Amenities[]
   areas                   Area[]
   tvchannels              TVChannels[]
@@ -295,16 +296,68 @@ model Tour {
   discount    Float    @default(0)
   whattobring String   @default("")
   included    String[] @default([""])
-  pickuptime  DateTime @default(now())
-  duration    Int      @default(6)
-  videos      String[] @default([""])
-  images      String[] @default([""])
+  pickuptime  String   @default("")
+
+  maxPeople     Int                 @default(2)
+  minAge        Int                 @default(10)
+  bestSeller    Boolean             @default(false)
+  priceInfo     String              @default("")
+  location      String              @default("")
+  offered       String[]            @default([""])
+  pricecategory TourPriceCategory[]
+
+  duration Int      @default(6)
+  videos   String[] @default([""])
+  images   String[] @default([""])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
   Hotel     Hotel?   @relation(fields: [hotelId], references: [id])
 
   @@index([hotelId])
+}
+
+model TourPriceCategory {
+  id              String   @id @default(uuid())
+  sku             Int      @default(0)
+  price           Float    @default(0)
+  description     String   @default("")
+  description_esp String   @default("")
+  tourId          String
+  Tour            Tour?    @relation(fields: [tourId], references: [id])
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @default(now())
+}
+
+model Spa {
+  id              String             @id @default(uuid())
+  name            String             @default("")
+  name_esp        String             @default("")
+  description     String             @default("")
+  description_esp String             @default("")
+  hotelId         String             @default("")
+  type            String             @default("Individual")
+  pricecategory   SpaPriceCategory[]
+  videos          String[]           @default([""])
+  images          String[]           @default([""])
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @default(now())
+  Hotel           Hotel?             @relation(fields: [hotelId], references: [id])
+
+  @@index([hotelId])
+}
+
+model SpaPriceCategory {
+  id              String   @id @default(uuid())
+  sku             Int      @default(0)
+  price           Float    @default(0)
+  description     String   @default("")
+  description_esp String   @default("")
+  duration        Int      @default(30)
+  spaId           String
+  spa             Spa?     @relation(fields: [spaId], references: [id])
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @default(now())
 }
 
 model Restaurant {
