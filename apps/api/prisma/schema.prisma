@@ -9,6 +9,20 @@ generator client {
   previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
+generator zod {
+  provider = "bunx zod-prisma-types"
+}
+
+generator markdown {
+  provider = "bunx prisma-markdown"
+  output   = "./ERD.md"
+  title    = "Shopping Mall"
+}
+
+generator docs {
+  provider = "node node_modules/prisma-docs-generator"
+}
+
 model Hotel {
   id                      String         @id @default(uuid())
   userId                  String
@@ -43,6 +57,7 @@ model Hotel {
   amenities               Amenities[]
   areas                   Area[]
   tvchannels              TVChannels[]
+  restaurants             Restaurant[]
   createdAt               DateTime       @default(now())
   updatedAt               DateTime       @default(now())
 }
@@ -384,6 +399,10 @@ model Restaurant {
   tables           Table[]
   dishcategories   DishCategory[]
   menuterminal     MenuTerminal?
+  hotelId          String         @default("")
+  Hotel            Hotel?         @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+
+  @@index([hotelId])
 }
 
 model MenuTerminal {
@@ -433,22 +452,23 @@ enum DISHCATEGORY {
 }
 
 model Dish {
-  id              String       @id @default(uuid())
-  sku             Int          @unique
-  name            String
-  name_esp        String
-  description     String
-  description_esp String
-  price           Int
-  image           String
-  category        String
-  category_esp    String
-  restaurantId    String
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @default(now())
-  Restaurant      Restaurant?  @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
-  dishCategory    DishCategory @relation(fields: [categoryId], references: [id])
-  categoryId      String
+  id                    String       @id @default(uuid())
+  sku                   Int          @unique
+  name                  String
+  name_esp              String
+  description           String
+  description_esp       String
+  price                 Int          @default(0)
+  image                 String
+  avialiableAtDayofWeek Int          @default(0)
+  category              String
+  category_esp          String
+  restaurantId          String
+  createdAt             DateTime     @default(now())
+  updatedAt             DateTime     @default(now())
+  Restaurant            Restaurant?  @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  dishCategory          DishCategory @relation(fields: [categoryId], references: [id])
+  categoryId            String
 
   @@index([restaurantId])
   @@index([categoryId])
