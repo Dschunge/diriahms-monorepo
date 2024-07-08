@@ -1,29 +1,36 @@
-version: "3"
+version: '3.8'
+name: turbo-docker-monorepo-dev
+
+x-defaults:
+  &defaults
+  init: true
+  tty: true
+  networks:
+    - monorepo_network
 
 services:
-  web:
-    container_name: web
-    build:
-      context: .
-      dockerfile: ./apps/next/Dockerfile
-    restart: always
-    ports:
-      - 3001:3001
-    networks:
-      - app_network
-  api:
-    container_name: api
-    build:
-      context: .
-      dockerfile: ./apps/api/Dockerfile
-    restart: always
-    ports:
-      - 3200:3200
-    networks:
-      - app_network
 
-# Define a network, which allows containers to communicate
-# with each other, by using their container name as a hostname
+  ####################################################################
+
+  api:
+    <<: *defaults
+    ports:
+      - "3200:3200"
+    command: yarn workspace api start:dev
+    environment:
+      - PORT=3200
+      - IN_CONTAINER=1
+    build:
+      args:
+        APP: api
+        START_COMMAND: start:dev
+      context: .
+      dockerfile: ./dockerfiles/Dockerfile.dev
+    volumes:
+      - ./apps/api:/app/apps/api
+      - /app/apps/api/node_modules
+
+####################################################################        
+
 networks:
-  app_network:
-    external: true
+  monorepo_network:

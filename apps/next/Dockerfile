@@ -1,4 +1,4 @@
-FROM node:18-alpine AS base
+FROM node:20 AS base
 
 # This Dockerfile is copy-pasted into our main docs at /docs/handbook/deploying-with-docker.
 # Make sure you update both files!
@@ -23,7 +23,7 @@ WORKDIR /app
 COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/yarn.lock ./yarn.lock
-RUN yarn install
+RUN npm install
 
 # Build the project
 COPY --from=builder /app/out/full/ .
@@ -36,7 +36,7 @@ COPY turbo.json turbo.json
 # ARG TURBO_TOKEN
 # ENV TURBO_TOKEN=$TURBO_TOKEN
 
-RUN yarn turbo build --filter=next...
+RUN yarn turbo build --filter=next-app
 
 FROM base AS runner
 WORKDIR /app
@@ -55,4 +55,4 @@ COPY --from=installer --chown=nextjs:nodejs /app/apps/next/.next/standalone ./
 COPY --from=installer --chown=nextjs:nodejs /app/apps/next/.next/static ./apps/next/.next/static
 COPY --from=installer --chown=nextjs:nodejs /app/apps/next/public ./apps/next/public
 
-CMD node apps/web/server.js
+#CMD node apps/web/server.js

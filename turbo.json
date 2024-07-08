@@ -11,7 +11,7 @@
 
   "tasks": {
     "build": {
-      "env": ["DISABLE_EXTRACTION", "NODE_ENV", "EAS_BUILD_PLATFORM", "DATABASE_URL"],
+      "inputs": ["$TURBO_DEFAULT", ".env*"],
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**", "build/**", "node_modules/.cache/metro/**"]
     },
@@ -20,7 +20,7 @@
       "persistent": true,
       "env": ["DISABLE_EXTRACTION", "NODE_ENV", "EAS_BUILD_PLATFORM", "DATABASE_URL"]
     },
-    "db:generate": {
+    "generate": {
       "cache": false
     },
     "db:push": {
