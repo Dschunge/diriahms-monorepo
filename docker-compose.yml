@@ -2,7 +2,6 @@ version: '3.8'
 name: turbo-docker-monorepo-dev
 
 x-defaults:
-  &defaults
   init: true
   tty: true
   stdin_open: true
@@ -14,7 +13,6 @@ services:
   ####################################################################
 
   api:
-    <<: *defaults
     ports:
       - "3200:3200"
     command: yarn workspace api start:dev
