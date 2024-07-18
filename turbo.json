@@ -20,6 +20,10 @@
       "persistent": true,
       "env": ["DISABLE_EXTRACTION", "NODE_ENV", "EAS_BUILD_PLATFORM", "DATABASE_URL"]
     },
+    "start:api": {
+      "cache": false,
+      "inputs": ["$TURBO_DEFAULT", ".env*"]
+    },
     "generate": {
       "cache": false
     },

@@ -5,6 +5,7 @@ x-defaults:
   &defaults
   init: true
   tty: true
+  stdin_open: true
   networks:
     - monorepo_network
 

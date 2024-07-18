@@ -9,20 +9,6 @@ generator client {
   previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
-generator zod {
-  provider = "bunx zod-prisma-types"
-}
-
-generator markdown {
-  provider = "bunx prisma-markdown"
-  output   = "./ERD.md"
-  title    = "Shopping Mall"
-}
-
-generator docs {
-  provider = "node node_modules/prisma-docs-generator"
-}
-
 model Hotel {
   id                      String         @id @default(uuid())
   userId                  String

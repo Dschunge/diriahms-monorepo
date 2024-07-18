@@ -7,9 +7,9 @@ import {
 } from '@nestjs/platform-express';
 import { RequestInfo, RequestInit } from 'node-fetch';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { SecuritySchemeObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
-import { Transport, MicroserviceOptions } from '@nestjs/microservices';
-import { graphqlUploadExpress } from 'graphql-upload-ts';
+// import { SecuritySchemeObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
+// import { Transport, MicroserviceOptions } from '@nestjs/microservices';
+// import { graphqlUploadExpress } from 'graphql-upload-ts';
 import 'dotenv/config';
 
 const fetch = (url: RequestInfo, init?: RequestInit) =>
@@ -34,10 +34,10 @@ async function bootstrap() {
 
   app.enableCors();
 
-  app.use(
+  /* app.use(
     '/graphql',
     graphqlUploadExpress({ maxFileSize: 100000000, maxFiles: 10 }),
-  );
+  ); */
 
   // Register the global-header interceptor
   // app.use(GlobalHeaderInterceptor);
@@ -76,7 +76,7 @@ async function bootstrap() {
     //   } as SecuritySchemeObject,
     //   'Bearer'LaunchDarkly
     // )
-    .setLicense('License', 'license')
+    .setLicense('License', 'Commercial')
     .setTermsOfService('terms')
     .setContact('Juergen Schaar', '', 'j.schaar@diriahms.net')
     .build();
