@@ -8,10 +8,13 @@ COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 sudo docker-compose -f docker-compo
 # Start prod in detached mode
 sudo docker-compose -f docker-compose.yml up -d
 
- sudo docker exec -it <mycontainer> sh
+ sudo docker exec -it d58eadfd7bb3 sh
  
  sudo docker container stop <mycontainer>
 
  sudo docker run -it 77d39076de8d sh
 
  sudo docker start -a 2aef27dea9b7
+
+# Stop and kill all containers and Images
+ docker system prune -a
